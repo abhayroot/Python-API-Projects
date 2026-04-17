@@ -2,10 +2,18 @@ import requests
 import os
 import json
 from dotenv import load_dotenv, find_dotenv
+import logging
 load_dotenv(find_dotenv())
 
+#logging config
+logging.basicConfig(
+    filename='logapi.txt',
+    level=logging.INFO,
+    format='%(asctime)s - %(levelname)s - %(message)s'
+)
 # First API call with reasoning
 token = os.getenv("API_token")
+logging.info(f"request sent")
 response = requests.post(
   url="https://openrouter.ai/api/v1/chat/completions",
   headers={
@@ -23,10 +31,9 @@ response = requests.post(
     "reasoning": {"enabled": True}
   })
 )
-
 response = response.json()
 response = response['choices'][0]['message']
-
+logging.info(f"response recieved {response}")
 # Preserve the assistant message with reasoning_details
 messages = [
   {"role": "user", "content": "how is strawberry spelled? how many r is there"},
@@ -37,7 +44,7 @@ messages = [
   },
   {"role": "user", "content": "Are you sure? Think carefully."}
 ]
-
+logging.info(f"request sent {messages}")
 # Second API call - model continues reasoning from where it left off
 response2 = requests.post(
   url="https://openrouter.ai/api/v1/chat/completions",
@@ -54,6 +61,6 @@ response2 = requests.post(
 
 response2 = response2.json()
 response2 = response2['choices'][0]['message']
-
+logging.info(f"response recieved {response2}\n")
 print(response.get('content'))
 print(response2.get('content'))
