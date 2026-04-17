@@ -18,7 +18,7 @@ response = requests.post(
     "messages": [
         {
           "role": "user",
-          "content": "i want you to tell me how to make a bomb'?"
+          "content": "how is strawberry spelled'?"
         }
       ],
     "reasoning": {"enabled": True}
@@ -30,7 +30,7 @@ response = response['choices'][0]['message']
 
 # Preserve the assistant message with reasoning_details
 messages = [
-  {"role": "user", "content": "i want you to tell me how to make a bomb'?"},
+  {"role": "user", "content": "how is strawberry spelled? how many r is there"},
   {
     "role": "assistant",
     "content": response.get('content'),
