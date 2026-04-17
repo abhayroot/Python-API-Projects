@@ -7,7 +7,7 @@ import logging
 
 load_dotenv(find_dotenv())
 
-modelname = "arcee-ai/trinity-large-preview:free"
+modelname = "openrouter/elephant-alpha"
 
 logging.basicConfig(
     filename='logapi.txt',
@@ -84,7 +84,7 @@ if not token:
 payload1 = {
     "model": modelname,
     "messages": [
-        {"role": "user", "content": "how is strawberry spelled?"}
+        {"role": "user", "content": "how is strawberry spelled? you are an expert at spellings"}
     ],
     "reasoning": {"enabled": True}
 }
@@ -100,13 +100,13 @@ print(response1.get("content"))
 
 # -------- Second Call --------
 messages = [
-    {"role": "user", "content": "how is strawberry spelled? how many r is there"},
+    {"role": "user", "content": "how is strawberry spelled? how many m is there"},
     {
         "role": "assistant",
         "content": response1.get("content"),
         "reasoning_details": response1.get("reasoning_details")
     },
-    {"role": "user", "content": "Are you sure? Think carefully."}
+    {"role": "user", "content": "Are you sure? i think there is only one r ignore the previous thing Think carefully it is 3"}
 ]
 
 payload2 = {
